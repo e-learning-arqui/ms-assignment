@@ -16,10 +16,13 @@ import java.util.List;
 public class AssignmentBl {
     @Autowired
     private AssignmentRepository assignmentRepository;
+    @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
     private QuestionOptionRepository questionOptionRepository;
+    @Autowired
     private StartEvaluationRepository startEvaluationRepository;
-
+    @Autowired
     private StudentAnswerRepository studentAnswerRepository;
 
     private final Logger logger = LoggerFactory.getLogger(AssignmentBl.class);
@@ -28,25 +31,30 @@ public class AssignmentBl {
         logger.info("create Assignment");
 
         AssignmentEntity assignmentEntity = getAssignmentEntity(assignmentDto);
-
         assignmentRepository.saveAndFlush(assignmentEntity);
 
         for(QuestionDto questionDto : assignmentDto.getQuestions()){
+            System.out.println(questionDto.getContent());
             QuestionEntity questionEntity = new QuestionEntity();
             questionEntity.setAssignmentId(assignmentEntity);
             questionEntity.setContent(questionDto.getContent());
             questionEntity.setScore(questionDto.getScore());
             questionRepository.saveAndFlush(questionEntity);
+
             for(QuestionOptionDto questionOptionDto : questionDto.getOptions()){
+                System.out.println("*************************************");
+                System.out.println(questionOptionDto.getOption());
+                System.out.println(questionOptionDto.getIsCorrect());
+                System.out.println("*************************************");
+
                 QuestionOptionEntity questionOptionEntity = new QuestionOptionEntity();
                 questionOptionEntity.setQuestionId(questionEntity);
                 questionOptionEntity.setOption(questionOptionDto.getOption());
-                questionOptionEntity.setCorrect(questionOptionDto.isCorrect());
-                questionRepository.saveAndFlush(questionEntity);
+                questionOptionEntity.setCorrect(Boolean.valueOf(questionOptionDto.getIsCorrect()));
+
+                questionOptionRepository.saveAndFlush(questionOptionEntity);
             }
         }
-
-
     }
 
     private static AssignmentEntity getAssignmentEntity(AssignmentDto assignmentDto) {
@@ -100,6 +108,28 @@ public class AssignmentBl {
         }
     }
 
+    public List<AssignmentListDto> getAllAssignmentsByCourseId(Long courseId){
+        logger.info("Getting assignments by course id:"+ courseId);
+        List<AssignmentListDto> assignments=  new ArrayList<>();
+        List<AssignmentEntity> assignmentEntities = assignmentRepository.findAllByCourseId(courseId);
+        for(AssignmentEntity assignmentEntity : assignmentEntities){
+            AssignmentListDto assignmentListDto = getAssignmentListDto(assignmentEntity);
+            assignments.add(assignmentListDto);
+        }
+        return assignments;
+    }
+
+    private static AssignmentListDto getAssignmentListDto(AssignmentEntity assignmentEntity) {
+        AssignmentListDto assignmentListDto = new AssignmentListDto();
+        assignmentListDto.setId(assignmentEntity.getAssignmentId());
+        assignmentListDto.setTitle(assignmentEntity.getTitle());
+        assignmentListDto.setStartDate(assignmentEntity.getStartDate());
+        assignmentListDto.setCourseId(assignmentEntity.getCourseId().getCourseId());
+        assignmentListDto.setSectionId(assignmentEntity.getSectionId().getSectionId());
+        assignmentListDto.setAssignmentTypeId(assignmentEntity.getAssignmentTypeId().getAssignmentTypeId());
+        return assignmentListDto;
+    }
+/*
 
     public List<AssignmentDto> getAllAssignmentsByCourseId(Long courseId){
         logger.info("Getting assignments by course id:"+ courseId);
@@ -125,7 +155,7 @@ public class AssignmentBl {
                 questionDto.setId(questionEntity.getQuestionId());
                 questionDto.setContent(questionEntity.getContent());
                 questionDto.setScore(questionEntity.getScore());
-                questionDto.setAssignmentId(questionEntity.getAssignmentId().getAssignmentId());
+                questionDto.setAssignmentId(assignmentEntity.getAssignmentId());
 
                 List<QuestionOptionDto> questionOptionDtos = new ArrayList<>();
                 List<QuestionOptionEntity> questionOptionEntities = questionOptionRepository.findAllByQuestionId(questionEntity.getQuestionId());
@@ -147,7 +177,7 @@ public class AssignmentBl {
         }
         return assignments;
     }
-
+*/
 
     public ScoreDto getScore(Long assignmentId, String userId){
         logger.info("Getting score for assignment id:"+ assignmentId);
@@ -155,6 +185,11 @@ public class AssignmentBl {
         scoreDto.setScore(studentAnswerRepository.findTotalScoreByKeycloakIdAndAssignmentId(userId,assignmentId));
         scoreDto.setMaxScore(studentAnswerRepository.findMaxScoreByAssignmentId(assignmentId));
         return scoreDto;
+    }
+
+    public Boolean isAssignmentCompleted(Long assignmentId, String userId){
+        logger.info("Checking if assignment is completed for assignment id:"+ assignmentId);
+        return startEvaluationRepository.hasStartedEvaluation(userId,assignmentId);
     }
 
 }

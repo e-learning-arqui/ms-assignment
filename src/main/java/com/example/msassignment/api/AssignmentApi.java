@@ -1,10 +1,7 @@
 package com.example.msassignment.api;
 
 import com.example.msassignment.bl.AssignmentBl;
-import com.example.msassignment.dto.AssignmentDto;
-import com.example.msassignment.dto.ResponseDto;
-import com.example.msassignment.dto.ScoreDto;
-import com.example.msassignment.dto.StudentAnswerDto;
+import com.example.msassignment.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +19,7 @@ public class AssignmentApi {
     public ResponseDto<String> createAssignment(@RequestBody AssignmentDto assignmentDto) {
         ResponseDto<String> response = new ResponseDto<>();
         try {
+            System.out.println("assignmentDto: " + assignmentDto.toString());
             assignmentBl.createAssignment(assignmentDto);
             response.setCode("0000");
             response.setResponse("Assignment created successfully");
@@ -38,6 +36,7 @@ public class AssignmentApi {
     @PutMapping("/{id}/user/{userId}")
     public ResponseDto<String> completeAssignment(@PathVariable Long id, @PathVariable String userId) {
         ResponseDto<String> response = new ResponseDto<>();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
         try {
             assignmentBl.completeAssignment(id,userId);
             response.setCode("0000");
@@ -52,11 +51,11 @@ public class AssignmentApi {
 
     //guardar las respuestas de un usuario a un assignment
 
-    @PostMapping("/{id}")
-    public ResponseDto<String> saveStudentAnswer(@PathVariable Long id, @RequestBody List<StudentAnswerDto> answers) {
+    @PostMapping("/{assignmentId}")
+    public ResponseDto<String> saveStudentAnswer(@PathVariable Long assignmentId, @RequestBody List<StudentAnswerDto> answers) {
         ResponseDto<String> response = new ResponseDto<>();
         try {
-            assignmentBl.saveAnswers(id,answers);
+            assignmentBl.saveAnswers(assignmentId,answers);
             response.setCode("0000");
             response.setResponse("Assignment assigned successfully");
             return response;
@@ -70,8 +69,8 @@ public class AssignmentApi {
     //obtener todos los assignments de un curso
 
     @GetMapping("/all/{courseId}")
-    public ResponseDto<List<AssignmentDto>> getAllAssignmentsByCourseId(@PathVariable Long courseId) {
-        ResponseDto<List<AssignmentDto>> response = new ResponseDto<>();
+    public ResponseDto<List<AssignmentListDto>> getAllAssignmentsByCourseId(@PathVariable Long courseId) {
+        ResponseDto<List<AssignmentListDto>> response = new ResponseDto<>();
         try {
             response.setCode("0000");
             response.setResponse(assignmentBl.getAllAssignmentsByCourseId(courseId));
@@ -100,13 +99,13 @@ public class AssignmentApi {
     }
 
     // verificacion si un estudiante ya inicio un assignment
-/*
+
     @GetMapping("/{id}/user/{userId}")
     public ResponseDto<Boolean> isAssignmentStarted(@PathVariable Long id, @PathVariable String userId) {
         ResponseDto<Boolean> response = new ResponseDto<>();
         try {
             response.setCode("0000");
-            response.setResponse(assignmentBl.isAssignmentStarted(id,userId));
+            response.setResponse(assignmentBl.isAssignmentCompleted(id,userId));
             return response;
         } catch (Exception ex) {
             response.setCode("9999");
@@ -115,6 +114,7 @@ public class AssignmentApi {
         }
 
     }
-*/
+
+
 
 }

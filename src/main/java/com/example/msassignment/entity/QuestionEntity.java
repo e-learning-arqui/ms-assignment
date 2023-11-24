@@ -10,8 +10,7 @@ public class QuestionEntity {
     @Column(name = "QUESTION_ID")
     private Long questionId;
 
-    @Lob
-    @Column(name = "CONTENT", nullable = false)
+    @Column(name = "CONTENT", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)

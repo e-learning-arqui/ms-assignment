@@ -41,6 +41,18 @@ public class QuestionDto {
 
     public void setOptions(List<QuestionOptionDto> options) {this.options = options;}
 
+    // toString
+    @Override
+
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", assignmentId=" + assignmentId +
+                ", score=" + score +
+                '}';
+    }
+
 
 
 }

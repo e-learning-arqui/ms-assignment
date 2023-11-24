@@ -1,21 +1,19 @@
 package com.example.msassignment.dto;
 
 import java.util.Date;
-import java.util.List;
 
-public class AssignmentDto {
+public class AssignmentListDto {
     private Long id;
     private String title;
     private Long assignmentTypeId;
     private Date startDate;
     private Long sectionId;
-    private Long courseId;
+                                                                                                                                                                                                                                                                                                                                                                                                        private Long courseId;
 
-    private List<QuestionDto> questions;
+    //constructor
+    public AssignmentListDto() {}
 
-    public AssignmentDto() {}
-
-    public AssignmentDto(Long id, String title, Long assignmentTypeId, Date startDate, Long sectionId, Long courseId) {
+    public AssignmentListDto(Long id, String title, Long assignmentTypeId, Date startDate, Long sectionId, Long courseId) {
         this.id = id;
         this.title = title;
         this.assignmentTypeId = assignmentTypeId;
@@ -24,7 +22,7 @@ public class AssignmentDto {
         this.courseId = courseId;
     }
 
-    // getters setters y to string
+    //getters setters y to string
     public Long getId() {return id;}
 
     public void setId(Long id) {this.id = id;}
@@ -41,6 +39,7 @@ public class AssignmentDto {
 
     public void setStartDate(Date startDate) {this.startDate = startDate;}
 
+
     public Long getSectionId() {return sectionId;}
 
     public void setSectionId(Long sectionId) {this.sectionId = sectionId;}
@@ -49,12 +48,15 @@ public class AssignmentDto {
 
     public void setCourseId(Long courseId) {this.courseId = courseId;}
 
-    public List<QuestionDto> getQuestions() {return questions;}
-
-    public void setQuestions(List<QuestionDto> questions) {this.questions = questions;}
-
-
-
-
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", assignmentTypeId=" + assignmentTypeId +
+                ", startDate=" + startDate +
+                ", sectionId=" + sectionId +
+                ", courseId=" + courseId +
+                '}';
+    }
 }
-
