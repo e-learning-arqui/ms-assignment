@@ -13,8 +13,6 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Long>, Jpa
     //@Query(value = "SELECT c FROM CourseEntity c WHERE c.status = true")
     Page <CourseEntity> findAllCourses(Pageable pageable);
 
-
-
     CourseEntity findByCourseId(Long courseId);
 
     @Query(value = "SELECT c FROM CourseEntity c WHERE c.professorId.professorId = :professorId")
