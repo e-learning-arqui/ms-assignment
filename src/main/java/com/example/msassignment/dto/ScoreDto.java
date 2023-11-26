@@ -1,30 +1,30 @@
 package com.example.msassignment.dto;
 
 public class ScoreDto {
-    private int score;
-    private int maxScore;
+    private Integer score;
+    private Integer maxScore;
 
     public ScoreDto() {
     }
 
-    public ScoreDto(int score, int maxScore) {
+    public ScoreDto(Integer score, Integer maxScore) {
         this.score = score;
         this.maxScore = maxScore;
     }
 
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
-    public int getMaxScore() {
+    public Integer getMaxScore() {
         return maxScore;
     }
 
-    public void setMaxScore(int maxScore) {
+    public void setMaxScore(Integer maxScore) {
         this.maxScore = maxScore;
     }
 

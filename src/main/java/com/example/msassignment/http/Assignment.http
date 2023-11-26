@@ -3,7 +3,8 @@ GET http://localhost:9999/api/v1/assignment/all/1
 
 ###
 GET http://localhost:9999/api/v1/assignment/1/user/c0f2e1ce-d014-4749-a7bd-8e8dbb8e81cf
-
+###
+GET http://localhost:9999/api/v1/assignment/8/score/user/8707a16a-1de1-4272-b19a-89c5831478ca
 ###
 PUT http://localhost:9999/api/v1/assignment/1/user/c0f2e1ce-d014-4749-a7bd-8e8dbb8e81cf
 ###
