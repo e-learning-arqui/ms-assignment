@@ -16,17 +16,17 @@ public class RabbitMqConfig {
 
     }
 
-    @Bean
-    public Queue progressQueue() {
-        return new Queue("progress.queue");
-    }
-
-    @Bean
-    public Binding bindingProgress(TopicExchange topicExchange, Queue progressQueue) {
-        return BindingBuilder.bind(progressQueue)
-                .to(topicExchange)
-                .with("progress.routingKey");
-    }
+//    @Bean
+//    public Queue progressQueue() {
+//        return new Queue("progress.queue");
+//    }
+//
+//    @Bean
+//    public Binding bindingProgress(TopicExchange topicExchange, Queue progressQueue) {
+//        return BindingBuilder.bind(progressQueue)
+//                .to(topicExchange)
+//                .with("progress.routingKey");
+//    }
 
     @Bean
     public Jackson2JsonMessageConverter messageConverter() {

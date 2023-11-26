@@ -2,7 +2,6 @@ package com.example.msassignment.dto;
 
 public class ProgressMessageDto {
 
-    private Long id;
 
     private String userKeyCloakId;
 
@@ -13,20 +12,20 @@ public class ProgressMessageDto {
     public ProgressMessageDto() {
     }
 
-    public ProgressMessageDto(Long id, String userKeyCloakId, Long courseId, Long classId) {
-        this.id = id;
+    public ProgressMessageDto( String userKeyCloakId, Long courseId, Long classId) {
+
         this.userKeyCloakId = userKeyCloakId;
         this.courseId = courseId;
         this.classId = classId;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public String getUserKeyCloakId() {
         return userKeyCloakId;

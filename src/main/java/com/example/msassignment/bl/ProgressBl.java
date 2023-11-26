@@ -39,11 +39,13 @@ public class ProgressBl {
 
 
     public void updateProgress(ProgressMessageDto progressMessageDto) {
+        log.info("Updating progress for user: " + progressMessageDto.getUserKeyCloakId());
         //get all classes from course
 
         ClassEntity classEntity = classRepository.findById(progressMessageDto.getClassId()).orElse(null);
 
         //get course by id
+        log.info("Finding course by id: " + progressMessageDto.getCourseId());
         CourseEntity courseEntity = courseRepository.findByCourseId(progressMessageDto.getCourseId());
         //get student by keycloak id
         Student studentEntity = studentRepository.findByKeycloakId(progressMessageDto.getUserKeyCloakId());
@@ -61,6 +63,7 @@ public class ProgressBl {
             progressEntity.setClassId(classEntity);
             progressRepository.save(progressEntity);
         }
+        log.info("Progress updated successfully");
 
 
     }
@@ -89,7 +92,7 @@ public class ProgressBl {
         Double totalVideosDouble = (double) totalVideos;
         Double videosWatchedDouble = (double) videosWatched;
 
-        return (double) (totalVideosDouble/videosWatchedDouble);
+        return (double) (videosWatchedDouble/totalVideosDouble);
     }
 
     public ProgressDto findProgressByCourseIdAndKcId(Long courseId, String keycloakId) {
