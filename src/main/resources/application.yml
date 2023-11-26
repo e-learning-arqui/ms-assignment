@@ -8,8 +8,15 @@ spring:
     #url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/cognito-hub}
     url: jdbc:postgresql://localhost:5432/cognito
     username: ${DB_USERNAME:postgres}
-    password: 1234
+    password: admin
     driver-class-name: org.postgresql.Driver
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: "/"
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -34,3 +41,4 @@ keycloak:
   credentials:
     secret: xLnnPpvGRBkekbUuVLnnudrkSVDTCzFc
     realm: cognito-hub
+
