@@ -182,10 +182,26 @@ public class AssignmentBl {
     public ScoreDto getScore(Long assignmentId, String userId){
         logger.info("Getting score for assignment id:"+ assignmentId);
         ScoreDto scoreDto = new ScoreDto();
-        scoreDto.setScore(studentAnswerRepository.findTotalScoreByKeycloakIdAndAssignmentId(userId,assignmentId));
+        Integer score = studentAnswerRepository.findTotalScoreByKeycloakIdAndAssignmentId(userId, assignmentId);
+        System.out.println("**************************************************");
+        System.out.println("score:"+score);
+        System.out.println("**************************************************");
+
+        if (score == null) {
+            if(studentAnswerRepository.existsByKeycloakIdAndAssignmentId(userId, assignmentId)){
+                scoreDto.setScore(0);
+            }else{
+                scoreDto.setScore(-1);
+
+            }
+        } else {
+            scoreDto.setScore(score);
+        }
+
         scoreDto.setMaxScore(studentAnswerRepository.findMaxScoreByAssignmentId(assignmentId));
         return scoreDto;
     }
+
 
     public Boolean isAssignmentCompleted(Long assignmentId, String userId){
         logger.info("Checking if assignment is completed for assignment id:"+ assignmentId);
