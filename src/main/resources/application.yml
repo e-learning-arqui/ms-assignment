@@ -8,7 +8,7 @@ spring:
     #url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/cognito-hub}
     url: jdbc:postgresql://localhost:5432/cognito
     username: ${DB_USERNAME:postgres}
-    password: admin
+    password: 1234
     driver-class-name: org.postgresql.Driver
   rabbitmq:
     host: localhost
