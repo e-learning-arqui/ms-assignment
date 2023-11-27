@@ -54,10 +54,16 @@ security:
       roles: [CREATE-COURSES]
     - path: /api/v1/assignment/{id}/user/{userId}
       method: PUT
-      roles: [VIEW-COURSES]
+      roles: [VIEW-CONTENT]
+    - path: /api/v1/assignment/{assignmentId}
+      method: POST
+      roles: [VIEW-CONTENT]
     - path: /api/v1/assignment/all/{courseId}
       method: GET
-      roles: [CREATE-COURSES]
+      roles: [CREATE-COURSES, VIEW-CONTENT]
+    - path: /api/v1/assignment-type
+      method: GET
+      roles: [VIEW-COURSES, CREATE-COURSES]
 
 
 token:
