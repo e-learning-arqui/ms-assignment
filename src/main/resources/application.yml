@@ -14,7 +14,7 @@ spring:
     #url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/cognito-hub}
     url: jdbc:postgresql://localhost:5432/cognito
     username: ${DB_USERNAME:postgres}
-    password: admin
+    password: 1234
     driver-class-name: org.postgresql.Driver
   rabbitmq:
     host: localhost
@@ -47,6 +47,18 @@ keycloak:
   credentials:
     secret: xLnnPpvGRBkekbUuVLnnudrkSVDTCzFc
     realm: cognito-hub
+security:
+  routes:
+    - path: /api/v1/assignment
+      method: POST
+      roles: [CREATE-COURSES]
+    - path: /api/v1/assignment/{id}/user/{userId}
+      method: PUT
+      roles: [VIEW-COURSES]
+    - path: /api/v1/assignment/all/{courseId}
+      method: GET
+      roles: [CREATE-COURSES]
+
 
 token:
   converter:
